@@ -87,6 +87,4 @@ The following features were implemented independently:
    ```bash
    python main.py
 
-   ## Conclusion
-
 Thank you for exploring **Mountain Shooter**! This game was a challenging yet rewarding project that combined creativity and programming skills to bring a classic 2D shooter experience to life.
