@@ -18,8 +18,6 @@ from code.Player import Player
 
 class Level:
     def __init__(self, window: Surface, name: str, game_mode: str, player_score: list[int]):
-        self.timeout = None
-        self.timeout = TIMEOUT_LEVEL  # 20 segundos
         self.window = window
         self.name = name
         self.game_mode = game_mode
@@ -32,8 +30,14 @@ class Level:
             player = EntityFactory.get_entity("Player2")
             player.score = player_score[1]
             self.entity_list.append(player)
+
+        if name == "Level3":
+            self.timeout = TIMEOUT_LEVEL * 2  # double the time for Level 3
+        else:
+            self.timeout = TIMEOUT_LEVEL  # default time
+
         pygame.time.set_timer(EVENT_ENEMY, SPAWN_TIME)
-        pygame.time.set_timer(EVENT_TIMEOUT, TIMEOUT_STEP)
+        pygame.time.set_timer(EVENT_TIMEOUT, TIMEOUT_STEP)  # Keep the timer interval consistent
 
     def run(self, player_score: list[int]):
         pygame.mixer_music.load(f'./asset/{self.name}.mp3')
@@ -52,14 +56,23 @@ class Level:
                 if ent.name == "Player1":
                     self.level_text(14, f'Player 1 - Health: {ent.health} | Score: {ent.score}', COLOR_GREEN, (10, 25))
                 if ent.name == "Player2":
-                    self.level_text(14, f'Player 1 - Health: {ent.health} | Score: {ent.score}', COLOR_CYAN, (10, 45))
+                    self.level_text(14, f'Player 2 - Health: {ent.health} | Score: {ent.score}', COLOR_CYAN, (10, 45))
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
                 if event.type == EVENT_ENEMY:
-                    choice = random.choice(("Enemy1", "Enemy2"))
+                    if self.name == "Level3":
+                        # generating just "Enemy3" in level 3
+                        choice = "Enemy3"
+                    else:
+                        # generating random enemies between "Enemy1" and "Enemy2" in other levels
+                        choice = random.choice(("Enemy1", "Enemy2"))
+
+                    # append the chosen enemy to the entity list
                     self.entity_list.append(EntityFactory.get_entity(choice))
+
                 if event.type == EVENT_TIMEOUT:
                     self.timeout -= TIMEOUT_STEP
                     if self.timeout == 0:

@@ -4,7 +4,7 @@ import pygame
 from pygame import Surface, Rect
 from pygame.font import Font
 
-from code.Const import WIN_WIDTH, COLOR_ORANGE, COLOR_YELLOW, COLOR_WHITE, MENU_OPTION
+from code.Const import WIN_WIDTH, COLOR_ORANGE, COLOR_YELLOW, COLOR_WHITE, MENU_OPTION, WIN_HEIGHT
 
 
 class Menu:
@@ -22,6 +22,7 @@ class Menu:
             self.window.blit(source=self.surf, dest=self.rect)
             self.menu_text(50, "Mountain", COLOR_ORANGE, ((WIN_WIDTH / 2), 70))
             self.menu_text(50, "Shooter", COLOR_ORANGE, ((WIN_WIDTH / 2), 120))
+            self.menu_text(20, f"LAÍS VIGAS, RU:4700642", COLOR_WHITE, (85, WIN_HEIGHT - 20))
 
             for i in range(len(MENU_OPTION)):
                 if i == menu_option:
